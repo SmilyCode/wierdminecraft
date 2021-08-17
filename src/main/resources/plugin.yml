@@ -1,0 +1,6 @@
+name: WierdMinecraft
+version: ${project.version}
+main: smily.plugin.wierdminecraft.WierdMinecraft
+api-version: 1.17
+authors: [ SmilyKuy ]
+description: This will change your Minecraft Survival world into wierder than normal.. Its good for pranking your friend
