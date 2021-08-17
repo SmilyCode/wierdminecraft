@@ -76,9 +76,14 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring</artifactId>
+            <artifactId>spring-core</artifactId>
             <version>5.3.9</version>
-            <type>pom</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.9</version>
         </dependency>
 
         <dependency>
@@ -86,5 +91,6 @@
             <artifactId>MockBukkit-v1.17</artifactId>
             <version>1.7.0</version>
         </dependency>
+
     </dependencies>
 </project>
