@@ -1,17 +1,16 @@
-package smily.plugin.wierdminecraft.Armor;
+package smily.plugin.wierdminecraft.event;
 
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 
 public class DiamondArmorDeathEvent implements Listener {
     boolean checkArmor(Player player){
-
         int armorMeter = 0;
 
         for (ItemStack item : player.getInventory().getArmorContents()){
@@ -27,7 +26,7 @@ public class DiamondArmorDeathEvent implements Listener {
                 } else {
                     return false;
                 }
-            }else{
+            }else {
                 return false;
             }
         }
@@ -37,12 +36,17 @@ public class DiamondArmorDeathEvent implements Listener {
     }
 
     @EventHandler
-    void deathEvent(InventoryCloseEvent event) {
-        Player player = (Player) event.getPlayer();
+    public void doEvent(InventoryClickEvent event) {
+        if (event.getWhoClicked() instanceof Player) {
 
-        if (player.getOpenInventory().getType() == InventoryType.PLAYER) {
-            if (checkArmor(player)) {
-                player.setHealth(0d);
+            Player player = (Player) event.getWhoClicked();
+
+            if (player.getGameMode().equals(GameMode.SURVIVAL)){
+                if (event.getClickedInventory().getType().equals(player.getInventory().getType())) {
+                    if (checkArmor(player)) {
+                        player.setHealth(0d);
+                    }
+                }
             }
         }
     }
