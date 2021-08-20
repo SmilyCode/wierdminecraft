@@ -67,6 +67,7 @@ public class DiamondArmorDeathEvent implements Listener {
         Player player = e.getPlayer();
 
         if (isDiamondArmor(e.getItem())) {
+            System.out.println("Haha");
             if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
                 Bukkit.getScheduler().scheduleSyncDelayedTask(PluginContext.plugin, () -> {
                     if (checkArmor(player)) {
@@ -79,6 +80,10 @@ public class DiamondArmorDeathEvent implements Listener {
     }
 
     private boolean isDiamondArmor(ItemStack item){
-        return Arrays.stream(diamondArmor).equals(item);
+        if (item != null) {
+            return Arrays.asList(diamondArmor).contains(item);
+        } else {
+            return false;
+        }
     }
 }
