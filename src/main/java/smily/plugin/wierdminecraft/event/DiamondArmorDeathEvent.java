@@ -7,9 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import smily.plugin.wierdminecraft.PluginContext;
@@ -24,6 +23,7 @@ public class DiamondArmorDeathEvent implements Listener {
             new ItemStack(Material.DIAMOND_LEGGINGS),
             new ItemStack(Material.DIAMOND_BOOTS)
     };
+    boolean flag;
 
     boolean checkArmor(Player player){
         boolean[] test = new boolean[4];
@@ -44,20 +44,10 @@ public class DiamondArmorDeathEvent implements Listener {
             if (player.getGameMode().equals(GameMode.SURVIVAL)){
                 Bukkit.getScheduler().scheduleSyncDelayedTask(PluginContext.plugin, () -> {
                     if (checkArmor(player)) {
+                        flag = true;
                         player.setHealth(0d);
-                        player.sendMessage("You Die");
                     }
                 }, 5);
-
-                if (event.getClick().equals(ClickType.RIGHT)) {
-                    if (player.getOpenInventory().getType().equals(InventoryType.PLAYER)) {
-                        if (checkArmor(player)) {
-                            player.setHealth(0d);
-                            player.sendMessage("You Die");
-                        }
-
-                    }
-                }
             }
         }
     }
@@ -70,8 +60,8 @@ public class DiamondArmorDeathEvent implements Listener {
             if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
                 Bukkit.getScheduler().scheduleSyncDelayedTask(PluginContext.plugin, () -> {
                     if (checkArmor(player)) {
+                        flag = true;
                         player.setHealth(0d);
-                        player.sendMessage("You Die");
                     }
                 }, 5);
             }
@@ -83,6 +73,14 @@ public class DiamondArmorDeathEvent implements Listener {
             return Arrays.asList(diamondArmor).contains(item);
         } else {
             return false;
+        }
+    }
+
+    @EventHandler
+    public void deathEvent (PlayerDeathEvent e){
+        if (flag) {
+            e.setDeathMessage(e.getEntity().getDisplayName() + " jadi ayam penyet gara-gara diamond armor.");
+            flag = false;
         }
     }
 }
