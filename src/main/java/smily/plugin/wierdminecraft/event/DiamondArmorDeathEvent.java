@@ -14,40 +14,25 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import smily.plugin.wierdminecraft.PluginContext;
 
-import java.util.stream.Stream;
+import java.util.*;
 
 
 public class DiamondArmorDeathEvent implements Listener {
-
-    Material[] diamondArmor =
-            {Material.DIAMOND_BOOTS
-            , Material.DIAMOND_HELMET
-            , Material.DIAMOND_CHESTPLATE
-            , Material.DIAMOND_LEGGINGS};
+    ItemStack[] diamondArmor = {
+            new ItemStack(Material.DIAMOND_HELMET),
+            new ItemStack(Material.DIAMOND_CHESTPLATE),
+            new ItemStack(Material.DIAMOND_LEGGINGS),
+            new ItemStack(Material.DIAMOND_BOOTS)
+    };
 
     boolean checkArmor(Player player){
-        int armorMeter = 0;
+        boolean[] test = new boolean[4];
 
-        for (ItemStack item : player.getInventory().getArmorContents()){
-            if(item != null) {
-                if (item.getType().equals(Material.DIAMOND_HELMET)) {
-                    armorMeter++;
-                } else if (item.getType().equals(Material.DIAMOND_CHESTPLATE)) {
-                    armorMeter++;
-                } else if (item.getType().equals(Material.DIAMOND_LEGGINGS)) {
-                    armorMeter++;
-                } else if (item.getType().equals(Material.DIAMOND_BOOTS)) {
-                    armorMeter++;
-                } else {
-                    return false;
-                }
-            }else {
-                return false;
-            }
+        for (int i = 0; i < player.getInventory().getArmorContents().length; i++) {
+            test[i] = Arrays.asList(player.getInventory().getArmorContents()).contains(diamondArmor[i]);
         }
 
-        return armorMeter == 4;
-
+        return test[0] && test[1] && test[2] && test[3];
     }
 
     @EventHandler
@@ -70,6 +55,7 @@ public class DiamondArmorDeathEvent implements Listener {
                             player.setHealth(0d);
                             player.sendMessage("You Die");
                         }
+
                     }
                 }
             }
@@ -79,7 +65,8 @@ public class DiamondArmorDeathEvent implements Listener {
     @EventHandler
     public void onPlayerInteractEvent(PlayerInteractEvent e){
         Player player = e.getPlayer();
-        if (e.getHand().equals()) {
+
+        if (isDiamondArmor(e.getItem())) {
             if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)){
                 Bukkit.getScheduler().scheduleSyncDelayedTask(PluginContext.plugin, () -> {
                     if (checkArmor(player)) {
@@ -89,5 +76,9 @@ public class DiamondArmorDeathEvent implements Listener {
                 }, 5);
             }
         }
+    }
+
+    private boolean isDiamondArmor(ItemStack item){
+        return Arrays.stream(diamondArmor).equals(item);
     }
 }
