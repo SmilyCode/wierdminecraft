@@ -1,19 +1,18 @@
-package smily.plugin.wierdminecraft.Craftable;
+package smily.plugin.wierdminecraft.craftable.recipe;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.ShapedRecipe;
-import org.bukkit.plugin.Plugin;
+import smily.plugin.wierdminecraft.craftable.utils.SwapBase;
 
 public class StonePickaxeRecipe extends SwapBase{
-    static Plugin plugins = Bukkit.getPluginManager().getPlugin("WierdMinecraft");
 
     public static ShapedRecipe setStoneRecipe(){
 
         ItemStack pickaxe = new ItemStack(Material.STONE_PICKAXE);
 
-        ShapedRecipe shape = new ShapedRecipe(pluginKey, pickaxe);
+        ShapedRecipe shape = new ShapedRecipe(new NamespacedKey(SwapBase.plugin, "stonepickaxe"), pickaxe);
         shape.shape("P  "," PS"," SS");
         shape.setIngredient('P', Material.STICK);
         shape.setIngredient('S', Material.COBBLESTONE);
@@ -21,9 +20,9 @@ public class StonePickaxeRecipe extends SwapBase{
         return shape;
     }
 
-    @Override
-    void registerChanged() {
-        swapRecipe(Material.STONE_PICKAXE, StonePickaxeRecipe.setStoneRecipe());
 
+    @Override
+    public void registerChanged() {
+        swapRecipe(Material.STONE_PICKAXE, StonePickaxeRecipe.setStoneRecipe());
     }
 }
