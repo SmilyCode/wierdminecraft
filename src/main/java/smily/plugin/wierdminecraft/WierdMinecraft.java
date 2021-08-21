@@ -1,7 +1,7 @@
 package smily.plugin.wierdminecraft;
 
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
+import smily.plugin.wierdminecraft.craftable.recipe.DiamondArmorRecipe;
 import smily.plugin.wierdminecraft.craftable.recipe.LeatherArmorRecipe;
 import smily.plugin.wierdminecraft.craftable.recipe.StonePickaxeRecipe;
 import smily.plugin.wierdminecraft.event.DiamondArmorDeathEvent;
@@ -17,5 +17,6 @@ public final class WierdMinecraft extends JavaPlugin {
 
         PluginContext.context.getBean(StonePickaxeRecipe.class);
         PluginContext.context.getBean(LeatherArmorRecipe.class);
+        PluginContext.context.getBean(DiamondArmorRecipe.class);
     }
 }

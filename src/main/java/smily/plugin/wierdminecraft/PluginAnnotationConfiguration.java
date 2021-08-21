@@ -2,6 +2,7 @@ package smily.plugin.wierdminecraft;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import smily.plugin.wierdminecraft.craftable.recipe.DiamondArmorRecipe;
 import smily.plugin.wierdminecraft.craftable.recipe.LeatherArmorRecipe;
 import smily.plugin.wierdminecraft.craftable.recipe.StonePickaxeRecipe;
 import smily.plugin.wierdminecraft.event.DiamondArmorDeathEvent;
@@ -22,5 +23,10 @@ public class PluginAnnotationConfiguration {
     @Bean
     public LeatherArmorRecipe getLeatherArmorRecipe(){
         return new LeatherArmorRecipe();
+    }
+
+    @Bean
+    public DiamondArmorRecipe getDiamondArmorRecipe(){
+        return new DiamondArmorRecipe();
     }
 }

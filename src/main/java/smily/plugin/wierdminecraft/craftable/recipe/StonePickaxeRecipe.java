@@ -12,12 +12,10 @@ public class StonePickaxeRecipe extends SwapBase{
 
         ItemStack pickaxe = new ItemStack(Material.STONE_PICKAXE);
 
-        ShapedRecipe shape = new ShapedRecipe(new NamespacedKey(SwapBase.plugin, "stonepickaxe"), pickaxe);
-        shape.shape("P  "," PS"," SS");
-        shape.setIngredient('P', Material.STICK);
-        shape.setIngredient('S', Material.COBBLESTONE);
-
-        return shape;
+        return new ShapedRecipe(new NamespacedKey(SwapBase.plugin, "stonepickaxe"), pickaxe)
+                .shape("P  "," PS"," SS")
+                .setIngredient('P', Material.STICK)
+                .setIngredient('S', Material.COBBLESTONE);
     }
 
 
